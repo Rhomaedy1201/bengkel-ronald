@@ -51,16 +51,16 @@ class ReservasiController extends Controller
         $reservasi->update();
         return $this->successResponse("Data berhasil diubah..");
     }
-    public function setService(Request $request,$id)
+    public function setService(Request $request, $id)
     {
         $user = Auth::user();
-        $input = $request->only('odometer','detail','part_pengganti');
+        $input = $request->only('odometer', 'detail', 'part_pengganti');
         $reservasi = Reservasi::find($id);
         $input += array(
-            'service_advisor'=>$user->nama,
-            'tipe_service'=>$reservasi->detail_service,
-            'tanggal'=>Carbon::parse( $reservasi->tanggal)->format('Y-m-d'),
-            'id_kendaraan'=>$reservasi->kendaraan_id
+            'service_advisor' => $user->nama,
+            'tipe_service' => $reservasi->detail_service,
+            'tanggal' => Carbon::parse($reservasi->tanggal)->format('Y-m-d'),
+            'id_kendaraan' => $reservasi->kendaraan_id
         );
         Service::create($input);
         $reservasi->status = 'done';
